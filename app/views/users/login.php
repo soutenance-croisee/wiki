@@ -17,7 +17,7 @@
     <div class="bg-gradient-to-br from-purple-700 to-pink-500 min-h-screen flex flex-col justify-center items-center">
         <div class="bg-white rounded-lg shadow-lg p-8 max-w-md">
             <h1 class="text-4xl font-bold text-center text-purple-700 mb-8">Welcome to My Website</h1>
-            <form class="space-y-6">
+            <form class="space-y-6" method="POST" action="<?= URLROOT ?>/UsersController/login">
                 <div>
                     <label class="block text-gray-700 font-bold mb-2" for="email">
                         Email

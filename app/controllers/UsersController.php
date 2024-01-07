@@ -22,7 +22,7 @@ class UsersController extends Controller
             if (empty($data['name']))
                 $data['name_err'] = 'Please enter name';
             if (empty($data['email']))
-                $data['email_err'] = 'Please enter email lmok';
+                $data['email_err'] = 'Please enter email ';
             if (empty($data['password']))
                 $data['password_err'] = 'Please enter password';
 
@@ -39,7 +39,7 @@ class UsersController extends Controller
                     // user added successfully
                     // die('testiiing');
 
-                    redirect(URLROOT . '/pages/index');
+                    redirect(URLROOT . '/users/login');
                 } else {
                     // user not added successfully
                     die('Something went wrong!!');
@@ -65,7 +65,7 @@ class UsersController extends Controller
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            // $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data = [
                 'email' => $_POST['email'],
                 'password' => $_POST['password'],
@@ -85,10 +85,10 @@ class UsersController extends Controller
                 $user = $this->userModel->login($data['email'], $data['password']);
                 if ($user) {
                     // set The sessions
-                    // $_SESSION['user_id'] = $user->id;
+                    $_SESSION['user_id'] = $user->id;
                     $_SESSION['user_name'] = $user->username;
 
-                    redirect('pages/index');
+                    redirect(URLROOT . '/pages/index');
                 } else {
                     // password incorrect
                     $data['password_err'] = 'Password Incorrect';
@@ -115,7 +115,7 @@ class UsersController extends Controller
     // logout
     public function logout()
     {
-        // $_SESSION['users_id'] = null;
+        $_SESSION['users_id'] = null;
         $_SESSION['name'] = null;
         session_destroy();
         redirect('');
