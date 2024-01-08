@@ -59,6 +59,36 @@ class User
             return [];
         }
     }
+    public function fetchUsersNumber()
+    {
+        try {
+            $this->db->query("SELECT count(*) as number from users");
+            $row = $this->db->fetch();
+            return $row;
+        } catch (\Exception $e) {
+            error_log("Error in fetchUsersNumber(): " . $e->getMessage());
+        }
+    }
+    public function fetchTagssNumber()
+    {
+        try {
+            $this->db->query("SELECT count(*) as number from tags");
+            $row = $this->db->fetch();
+            return $row;
+        } catch (\Exception $e) {
+            error_log("Error in fetchUsersNumber(): " . $e->getMessage());
+        }
+    }
+    public function fetchWikisNumber()
+    {
+        try {
+            $this->db->query("SELECT count(*) as number from wikis");
+            $row = $this->db->fetch();
+            return $row;
+        } catch (\Exception $e) {
+            error_log("Error in fetchUsersNumber(): " . $e->getMessage());
+        }
+    }
 
 
 }

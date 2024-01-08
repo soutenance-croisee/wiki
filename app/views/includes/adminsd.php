@@ -94,7 +94,7 @@
                                 </form>
                             </li>
                             <li>
-                                <a href="https://demos.creative-tim.com/soft-ui-flowbite/"
+                                <a href="<?php echo URLROOT . "/admin/index"; ?>"
                                     class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500 rounded-lg hover:bg-gray-200 group  bg-white shadow-lg shadow-gray-200 hover:!bg-white  transition-all duration-200"
                                     sidebar-toggle-collapse="">
                                     <div
@@ -192,7 +192,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="https://demos.creative-tim.com/soft-ui-flowbite/users"
+
+                                <a href="<?php echo URLROOT . "/admin/users"; ?>"
                                     class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500 rounded-lg hover:bg-gray-200  group transition-all duration-200"
                                     sidebar-toggle-collapse="">
                                     <div

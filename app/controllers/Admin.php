@@ -20,6 +20,13 @@ class Admin extends Controller
         // var_dump($data);
         $this->view('admin/index', $data);
     }
+    public function users()
+    {
+        $data = $this->get_authors();
+
+        // var_dump($data);
+        $this->view('admin/users', $data);
+    }
     public function login()
     {
 
