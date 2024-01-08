@@ -13,9 +13,35 @@ class Admin extends Controller
         return $authors;
 
     }
+    public function get_users_number()
+    {
+        $number = $this->userModel->fetchUsersNumber();
+        return $number;
+    }
+    public function get_tags_number()
+    {
+
+        $tagNumber = $this->userModel->fetchTagsNumber();
+        return $tagNumber;
+    }
+    public function get_wikis_number()
+    {
+        $tagsNumber = $this->userModel->fetchWikisNumber();
+        return $tagsNumber;
+
+    }
+    public function get_categories_number()
+    {
+        $categoriesNumber = $this->userModel->fetchCategoriesNumber();
+        return $categoriesNumber;
+
+    }
     public function index()
     {
-        $data = $this->get_authors();
+        $data['categories_number'] = $this->get_categories_number();
+        $data['users_number'] = $this->get_users_number();
+        $data['wikis_number'] = $this->get_wikis_number();
+        $data['tags_number'] = $this->get_tags_number();
 
         // var_dump($data);
         $this->view('admin/index', $data);

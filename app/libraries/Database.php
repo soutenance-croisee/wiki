@@ -61,7 +61,7 @@ class Database
   public function fetchAll()
   {
     $this->execute();
-    return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+    return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   // Get single record as object
@@ -69,7 +69,7 @@ class Database
   public function fetch()
   {
     $this->stmt->execute();
-    $result = $this->stmt->fetch(PDO::FETCH_OBJ);
+    $result = $this->stmt->fetch(PDO::FETCH_ASSOC);
 
     return $result;
   }

@@ -62,7 +62,7 @@ class User
     public function fetchUsersNumber()
     {
         try {
-            $this->db->query("SELECT count(*) as number from users");
+            $this->db->query("SELECT count(*) as users_number from users");
             $row = $this->db->fetch();
             return $row;
         } catch (\Exception $e) {
@@ -72,7 +72,7 @@ class User
     public function fetchTagsNumber()
     {
         try {
-            $this->db->query("SELECT count(*) as number from tags");
+            $this->db->query("SELECT count(*) as tags_number from tags");
             $row = $this->db->fetch();
             return $row;
         } catch (\Exception $e) {
@@ -82,7 +82,17 @@ class User
     public function fetchWikisNumber()
     {
         try {
-            $this->db->query("SELECT count(*) as number from wikis");
+            $this->db->query("SELECT count(*) as wikis_number from wikis");
+            $row = $this->db->fetch();
+            return $row;
+        } catch (\Exception $e) {
+            error_log("Error in fetchUsersNumber(): " . $e->getMessage());
+        }
+    }
+    public function fetchCategoriesNumber()
+    {
+        try {
+            $this->db->query("SELECT count(*) as categories_number from categories");
             $row = $this->db->fetch();
             return $row;
         } catch (\Exception $e) {
