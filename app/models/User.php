@@ -132,17 +132,23 @@ class User
                       FROM tags
                       JOIN wiki_tag_pivot ON tags.id = wiki_tag_pivot.tag_id
                       WHERE wiki_tag_pivot.wiki_id = :wikiId";
-    
+
             $this->db->query($query);
             $this->db->bind(':wikiId', $wikiId);
-    
+
             $rows = $this->db->fetchAll();
-            
+
             return $rows;
         } catch (Exception $e) {
             error_log("Error fetching tags: " . $e->getMessage());
             return [];
         }
     }
-    
+    public function deleteCategory($id)
+    {
+
+        $this->db->query("DELETE from categories where id=:id");
+        $this->db->bind(":id", $id);
+        $this->db->execute();
+    }
 }

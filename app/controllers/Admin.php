@@ -46,6 +46,19 @@ class Admin extends Controller
         $categories = $this->userModel->fetchCategories();
         return $categories;
     }
+    public function deleteCategory()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryId'])) {
+            $categoryId = $_POST['categoryId'];
+            $this->userModel->deleteCategory($categoryId);
+            redirect(URLROOT . '/admin/categories');
+
+
+        } else {
+            echo "someting goes wrong";
+        }
+    }
+
     public function get_wikis($id)
     {
         $wikis = $this->userModel->fetchWikis($id);
