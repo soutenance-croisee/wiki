@@ -69,7 +69,7 @@ class User
             error_log("Error in fetchUsersNumber(): " . $e->getMessage());
         }
     }
-    public function fetchTagssNumber()
+    public function fetchTagsNumber()
     {
         try {
             $this->db->query("SELECT count(*) as number from tags");

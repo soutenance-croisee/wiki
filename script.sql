@@ -28,3 +28,11 @@ CREATE TABLE wikis (
     FOREIGN KEY (author_id) REFERENCES users(id),
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
+USE wiki;
+CREATE TABLE wiki_tag_pivot (
+    wiki_id INT,
+    tag_id INT,
+    PRIMARY KEY (wiki_id, tag_id),
+    FOREIGN KEY (wiki_id) REFERENCES wikis(id),
+    FOREIGN KEY (tag_id) REFERENCES tags(id)
+);
