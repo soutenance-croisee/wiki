@@ -15,7 +15,7 @@
     ?>
     <div>
 
-        <img src="<?php echo APPROOT . '/views/includes/logo.jpeg'; ?>" alt="" class="h-full w-full">
+        <img src="<?php echo URLROOT . '/images/logo.jpeg'; ?>" alt="" class="h-[90vh] w-full">
     </div>
 </body>
 

@@ -45,4 +45,20 @@ class User
         }
 
     }
+
+    public function fetchUsers()
+    {
+        try {
+            $this->db->query("SELECT * FROM users where role='author' or role='admin'");
+            $row = $this->db->fetchAll();
+
+            return $row;
+        } catch (\Exception $e) {
+
+            error_log("Error fetching users: " . $e->getMessage());
+            return [];
+        }
+    }
+
+
 }

@@ -87,7 +87,7 @@ class UsersController extends Controller
                     // set The sessions
                     $_SESSION['user_id'] = $user->id;
                     $_SESSION['user_name'] = $user->username;
-
+                    $_SESSION['email'] = $user->email;
                     redirect(URLROOT . '/pages/index');
                 } else {
                     // password incorrect
@@ -120,4 +120,5 @@ class UsersController extends Controller
         session_destroy();
         redirect('');
     }
+
 }

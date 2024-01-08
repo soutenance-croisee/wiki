@@ -1,11 +1,15 @@
-<?php 
-class Admin {
-    private $db ;
-    public function __construct(){
+<?php
 
-        $this->db = Database::getInstance(); 
+class Admin
+{
+    private $db;
+
+    public function __construct()
+    {
+        $this->db = Database::getInstance();
     }
-}
 
+
+}
 
 ?>

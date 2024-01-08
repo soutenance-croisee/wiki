@@ -52,14 +52,13 @@ class Database
     $this->stmt->bindValue($param, $value, $type);
   }
 
-  // Execute the prepared statement
   public function execute()
   {
     return $this->stmt->execute();
   }
 
   // Get result set as array of objects
-  public function resultAll()
+  public function fetchAll()
   {
     $this->execute();
     return $this->stmt->fetchAll(PDO::FETCH_OBJ);
@@ -79,6 +78,26 @@ class Database
   {
     return $this->stmt->rowCount();
   }
+  public function getUserByEmailAndRole($email)
+  {
+    $this->query('SELECT * FROM admins WHERE email = :email');
+    $this->bind(':email', $email);
+
+    try {
+      $user = $this->fetch();
+
+      if ($user && $user->role == 1) {
+        return $user;
+      } else {
+        return null;
+      }
+    } catch (PDOException $e) {
+
+      return null;
+    }
+  }
 }
+
+
 
 ?>
