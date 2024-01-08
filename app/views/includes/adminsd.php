@@ -13,7 +13,11 @@
 
     <link rel="stylesheet" href="https://demos.creative-tim.com/soft-ui-flowbite/app.css">
 
-
+    <div id="dialogContainer" class="VN--hide positionRightTop dialogMinimized react-draggable"
+        style="transform: translate(0px, 0px);">
+        <div id="workAroundDiv" class="WorkAroundDivStyled-sc-5d5kqr jQNPJF"></div>
+    </div>
+    </div>
 
 
     <aside id="sidebar"
@@ -72,7 +76,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="https://demos.creative-tim.com/soft-ui-flowbite-pro/mailing/inbox/" target="_blank"
+                            <a href="" target="_blank"
                                 class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500 rounded-lg hover:bg-gray-200 group transition-all duration-200"
                                 sidebar-toggle-collapse="">
                                 <div
@@ -130,7 +134,7 @@
                                         </g>
                                     </svg>
                                 </div>
-                                <span class="ml-3 text-dark-500 text-sm font-light" sidebar-toggle-item="">Inbox</span>
+                                <span class="ml-3 text-dark-500 text-sm font-light" sidebar-toggle-item="">WIKIS</span>
 
                             </a>
                         </li>
@@ -165,7 +169,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="https://demos.creative-tim.com/soft-ui-flowbite/products"
+                            <a href="<?php echo URLROOT . "/admin/categories"; ?>"
                                 class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500 rounded-lg hover:bg-gray-200  group transition-all duration-200"
                                 sidebar-toggle-collapse="">
                                 <div

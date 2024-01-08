@@ -36,6 +36,21 @@ class Admin extends Controller
         return $categoriesNumber;
 
     }
+    public function get_tags($wikiid)
+    {
+        $tags = $this->userModel->fetchTags($wikiid);
+        return $tags;
+    }
+    public function get_categories()
+    {
+        $categories = $this->userModel->fetchCategories();
+        return $categories;
+    }
+    public function get_wikis($id)
+    {
+        $wikis = $this->userModel->fetchWikis($id);
+        return $wikis;
+    }
     public function index()
     {
         $data['categories_number'] = $this->get_categories_number();
@@ -57,6 +72,11 @@ class Admin extends Controller
     {
 
         $this->view('admin/login');
+    }
+    public function categories()
+    {
+        $data['categories'] = $this->get_categories();
+        $this->view('admin/categories', $data);
     }
 
 }

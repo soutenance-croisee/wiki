@@ -100,5 +100,49 @@ class User
         }
     }
 
+    public function fetchCategories()
+    {
+        try {
+            $this->db->query("SELECT * FROM categories");
+            $row = $this->db->fetchAll();
 
+            return $row;
+        } catch (Exception $e) {
+
+            error_log("Error fetching users: " . $e->getMessage());
+            return [];
+        }
+    }
+    public function fetchWikis($id)
+    {
+        try {
+            $this->db->query("SELECT * FROM wikis where category_id=$id");
+            $row = $this->db->fetchAll();
+        } catch (Exception $e) {
+            error_log("Error fetching users: " . $e->getMessage());
+            return [];
+
+        }
+
+    }
+    public function fetchTags($wikiId)
+    {
+        try {
+            $query = "SELECT tags.*
+                      FROM tags
+                      JOIN wiki_tag_pivot ON tags.id = wiki_tag_pivot.tag_id
+                      WHERE wiki_tag_pivot.wiki_id = :wikiId";
+    
+            $this->db->query($query);
+            $this->db->bind(':wikiId', $wikiId);
+    
+            $rows = $this->db->fetchAll();
+            
+            return $rows;
+        } catch (Exception $e) {
+            error_log("Error fetching tags: " . $e->getMessage());
+            return [];
+        }
+    }
+    
 }
