@@ -119,7 +119,7 @@
                                                                 enctype="multipart/form-data"
                                                                 class="items-center space-y-4">
 
-                                                                method="POST">
+
                                                                 <div class="grid grid-cols-6 gap-6">
                                                                     <div class="col-span-6 sm:col-span-3">
                                                                         <label for="category-name"

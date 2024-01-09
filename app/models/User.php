@@ -6,16 +6,14 @@ class User
     {
         $this->db = Database::getInstance();
     }
-    public function fetchWikisByCategory()
+    public function fetchWikis()
     {
         try {
-            $this->db->query("
-                SELECT categories.id AS category_id, categories.title AS category_title,
-                       GROUP_CONCAT(wikis.id) AS wiki_ids, GROUP_CONCAT(wikis.title) AS wiki_titles, GROUP_CONCAT(wikis.content) AS wiki_contents
-                FROM categories
-                LEFT JOIN wikis ON categories.id = wikis.category_id
-                GROUP BY categories.id, categories.title
-            ");
+            $query = "
+                SELECT * from wikis WHERE is_archived=0
+            ";
+
+            $this->db->query($query);
 
             $results = $this->db->fetchAll();
             // var_dump($results);
@@ -26,6 +24,25 @@ class User
             return [];
         }
     }
+
+
+
+    public function archiveWiki($id)
+    {
+
+        try {
+            $this->db->query("UPDATE wikis SET is_archived = 1 WHERE id = :id");
+            $this->db->bind(":id", $id);
+            $this->db->execute();
+            $results = $this->db->fetchAll();
+            return $results;
+        } catch (Exception $e) {
+            error_log("Error fetching wikis by category: " . $e->getMessage());
+            return [];
+        }
+
+    }
+
 
 
     public function getUserByEmail($email)

@@ -51,7 +51,7 @@
                                     d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            Add wiki
+                            Add user
                         </button>
 
                     </div>
@@ -65,7 +65,7 @@
 
                             <div class="flex justify-between items-start p-5 rounded-t border-b">
                                 <h3 class="text-xl font-semibold">
-                                    Add new user
+                                    Add new wiki
                                 </h3>
                                 <button type="button" onclick="closeModal('modelConfirm')"
                                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-2xl text-sm p-1.5 ml-auto inline-flex items-center"
@@ -85,7 +85,7 @@
                                     <div class="grid grid-cols-6 gap-6">
                                         <div class="col-span-6 sm:col-span-3">
                                             <label for="category-name"
-                                                class="block mb-2 text-sm font-medium text-gray-900">Category
+                                                class="block mb-2 text-sm font-medium text-gray-900">Wiki
                                                 Name</label>
                                             <input type="text" name="category-name" id="category-name"
                                                 class="shadow-lg-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5"
@@ -97,7 +97,7 @@
                                     <div class="items-center p-6 rounded-b border-t border-gray-200">
                                         <button
                                             class="text-white rounded-lg bg-gradient-to-br from-pink-500 to-voilet-500 shadow-md shadow-gray-300 hover:scale-[1.02] transition-transform font-medium text-sm px-5 py-2.5 text-center"
-                                            type="submit">Add Category</button>
+                                            type="submit">Add Wiki</button>
                                     </div>
                                 </form>
 

@@ -102,22 +102,28 @@ class Admin extends Controller
 
         $this->view('admin/login');
     }
-    public function get_wikis_per_category()
+    public function archiveWiki()
     {
-        return $this->userModel->fetchWikisByCategory();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['wikiId'])) {
+            $wikiId = $_POST['wikiId'];
+            $this->userModel->archiveWiki($wikiId);
+            redirect(URLROOT . '/admin/wikis');
+
+
+        } else {
+            echo "someting goes wrong";
+        }
+    }
+    public function get_wikis()
+    {
+        $data = $this->userModel->fetchWikis();
+        return $data;
     }
 
     public function wikis()
     {
-        try {
-            $data['wikis'] = $this->get_wikis_per_category();
-            $data['categories'] = $this->get_categories();
-            // var_dump($data);
-
-            $this->view('admin/wikis', $data);
-        } catch (Exception $e) {
-            error_log("Error in wikis method: " . $e->getMessage());
-        }
+        $data['wikis'] = $this->get_wikis();
+        $this->view('admin/wikis', $data);
     }
 
 
@@ -126,21 +132,6 @@ class Admin extends Controller
         $data['categories'] = $this->get_categories();
         $this->view('admin/categories', $data);
     }
-    // public function get_wikis()
-    // {
-    //     try {
-    //         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryId'])) {
-    //             $categoryId = 1;
-    //             return $this->userModel->fetchWikis($categoryId);
-    //         } else {
-    //             throw new Exception("Invalid request or missing categoryId.");
-    //         }
-    //     } catch (Exception $e) {
-    //         error_log("Error in get_wikis: " . $e->getMessage());
-    //         echo "Something went wrong. Please try again later.";
-    //         return [];
-    //     }
-    // }
 
 
 
