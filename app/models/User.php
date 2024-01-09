@@ -161,4 +161,12 @@ class User
         $this->db->bind(":id", $id);
         $this->db->execute();
     }
+    public function insertCategory($title)
+    {
+
+        $this->db->query("INSERT into categories(title) values(:title)");
+        $this->db->bind(":title", $title);
+        $this->db->execute();
+
+    }
 }

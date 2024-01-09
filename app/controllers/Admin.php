@@ -46,6 +46,15 @@ class Admin extends Controller
         $categories = $this->userModel->fetchCategories();
         return $categories;
     }
+    public function insertCategory()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['category-name'])) {
+            $categoryName = $_POST['category-name'];
+            $this->userModel->insertCategory($categoryName);
+            redirect(URLROOT . '/admin/categories');
+
+        }
+    }
     public function deleteCategory()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryId'])) {
