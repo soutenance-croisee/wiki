@@ -6,6 +6,27 @@ class User
     {
         $this->db = Database::getInstance();
     }
+    public function fetchWikisByCategory()
+    {
+        try {
+            $this->db->query("
+                SELECT categories.id AS category_id, categories.title AS category_title,
+                       GROUP_CONCAT(wikis.id) AS wiki_ids, GROUP_CONCAT(wikis.title) AS wiki_titles, GROUP_CONCAT(wikis.content) AS wiki_contents
+                FROM categories
+                LEFT JOIN wikis ON categories.id = wikis.category_id
+                GROUP BY categories.id, categories.title
+            ");
+
+            $results = $this->db->fetchAll();
+            // var_dump($results);
+            return $results;
+
+        } catch (Exception $e) {
+            error_log("Error fetching wikis by category: " . $e->getMessage());
+            return [];
+        }
+    }
+
 
     public function getUserByEmail($email)
     {
@@ -98,7 +119,9 @@ class User
         } catch (\Exception $e) {
             error_log("Error in fetchUsersNumber(): " . $e->getMessage());
         }
+
     }
+
     public function fetchCategoriesNumber()
     {
         try {
@@ -123,18 +146,8 @@ class User
             return [];
         }
     }
-    public function fetchWikis($id)
-    {
-        try {
-            $this->db->query("SELECT * FROM wikis where category_id=$id");
-            $row = $this->db->fetchAll();
-        } catch (Exception $e) {
-            error_log("Error fetching users: " . $e->getMessage());
-            return [];
 
-        }
 
-    }
     public function fetchTags($wikiId)
     {
         try {
