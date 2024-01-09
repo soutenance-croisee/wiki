@@ -2,11 +2,12 @@
 
 class Users extends Controller
 {
-    public function index()
+    private $userModel;
+    public function __construct()
     {
-
-        $this->view('pages/index');
+        $this->userModel = $this->model('User');
     }
+
     public function login()
     {
 

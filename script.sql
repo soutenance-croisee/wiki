@@ -29,14 +29,7 @@ CREATE TABLE wikis (
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 USE wiki;
-CREATE TABLE wiki_tag_pivot (
-    wiki_id INT,
-    tag_id INT,
-    PRIMARY KEY (wiki_id, tag_id),
-    FOREIGN KEY (wiki_id) REFERENCES wikis(id),
-    FOREIGN KEY (tag_id) REFERENCES tags(id)
-);
--- Assuming categories.id is the primary key and wikis.category_id is the foreign key
+
 ALTER TABLE wikis
 ADD CONSTRAINT fk_category
 FOREIGN KEY (category_id) REFERENCES categories(id)
@@ -46,3 +39,10 @@ ADD CONSTRAINT fk_wiki_tag_pivot_tag_id
 FOREIGN KEY (tag_id)
 REFERENCES tags(id)
 ON DELETE CASCADE;
+CREATE TABLE tag_wiki_pivot (
+    tag_id INT,
+    wiki_id INT,
+    PRIMARY KEY (tag_id, wiki_id),
+    FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (wiki_id) REFERENCES wikis(id) ON DELETE CASCADE ON UPDATE CASCADE
+);

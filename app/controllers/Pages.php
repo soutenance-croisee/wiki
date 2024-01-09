@@ -9,10 +9,15 @@ class Pages extends Controller
         $this->userModel = $this->model('User');
     }
 
+    public function get_categories()
+    {
+        $categories = $this->userModel->fetchCategories();
+        return $categories;
+    }
     public function index()
     {
+        $data['categories'] = $this->get_categories();
 
         $this->view('pages/index');
-
     }
 }

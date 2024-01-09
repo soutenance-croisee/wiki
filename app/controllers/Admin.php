@@ -99,6 +99,7 @@ class Admin extends Controller
         $data['wikis_number'] = $this->get_wikis_number();
         $data['tags_number'] = $this->get_tags_number();
 
+
         // var_dump($data);
         $this->view('admin/index', $data);
     }
@@ -146,6 +147,7 @@ class Admin extends Controller
 
     public function tags()
     {
+        $data['categories'] = $this->get_categories();
         $data['tags'] = $this->get_tags();
         // var_dump($data);
         $this->view('admin/tags', $data);
