@@ -72,6 +72,7 @@ class UsersController extends Controller
                 'email_err' => '',
                 'password_err' => ''
             ];
+
             // check if email exist
             if (!$this->userModel->getUserByEmail($data['email'])) {
                 $data['email_err'] = 'User not exist';
@@ -83,11 +84,13 @@ class UsersController extends Controller
 
             if (empty($data['email_err']) && empty($data['password_err'])) {
                 $user = $this->userModel->login($data['email'], $data['password']);
+                // die(var_dump($user));
                 if ($user) {
                     // set The sessions
-                    $_SESSION['user_id'] = $user->id;
-                    $_SESSION['user_name'] = $user->username;
-                    $_SESSION['email'] = $user->email;
+                    $_SESSION['user_id'] = $user['id'];
+                    // die(var_dump($_SESSION['user_id']));
+                    $_SESSION['user_name'] = $user['username'];
+                    $_SESSION['email'] = $user['email'];
                     redirect(URLROOT . '/pages/index');
                 } else {
                     // password incorrect

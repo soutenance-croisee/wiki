@@ -31,20 +31,30 @@ class User
     }
     public function login($email, $password)
     {
-        $this->db->query("SELECT * FROM users WHERE email = :email");
-        $this->db->bind(':email', $email);
-        $row = $this->db->fetch();
+        try {
+            $this->db->query("SELECT * FROM users WHERE email = :email");
+            $this->db->bind(':email', $email);
+            $row = $this->db->fetch();
+            // var_dump($row);
 
-
-        $hashed_password = $row['password'];
-
-        if (password_verify($password, $hashed_password)) {
-            return $row;
-        } else {
+            if ($row) {
+                $hashed_password = $row['password'];
+                if (password_verify($password, $hashed_password)) {
+                    // var_dump($password);
+                    return $row; // Authentication successful
+                } else {
+                    return false; // Incorrect password
+                }
+            } else {
+                return false; // Email not found
+            }
+        } catch (PDOException $e) {
+            // Handle database errors
+            error_log('Login error: ' . $e->getMessage());
             return false;
         }
-
     }
+
 
     public function fetchUsers()
     {
