@@ -12,8 +12,8 @@
     include(APPROOT . "/views/includes/adminsd.php");
     ?>
     <?php
-    // include(APPROOT . "/views/includes/nav.php");
-    
+    include(APPROOT . "/views/includes/nav.php");
+
 
     ?>
     <div id="main-content" class="h-full bg-gray-50 relative overflow-y-auto lg:ml-64 ">

@@ -46,4 +46,16 @@
         $this->db->bind(":title", $title);
         $this->db->execute();
     }
+    public function updateCategory($title, $id)
+    {
+        try {
+            $this->db->query("UPDATE categories SET title = :title WHERE id = :id");
+            $this->db->bind(":title", $title);
+            $this->db->bind(":id", $id);
+            $this->db->execute();
+        } catch (\Exception $e) {
+            error_log("Error in updateCategory: " . $e->getMessage());
+        }
+    }
+
 }

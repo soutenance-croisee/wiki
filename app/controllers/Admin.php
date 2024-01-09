@@ -67,7 +67,18 @@ class Admin extends Controller
             echo "someting goes wrong";
         }
     }
+    public function updateCategory()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryId'])) {
+            $categoryId = $_POST['categoryId'];
+            $this->userModel->updateCategory($categoryId);
+            redirect(URLROOT . '/admin/categories');
 
+
+        } else {
+            echo "someting goes wrong";
+        }
+    }
     public function get_wikis($id)
     {
         $wikis = $this->userModel->fetchWikis($id);
