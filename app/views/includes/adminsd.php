@@ -76,7 +76,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="" target="_blank"
+                            <a href="<?php echo URLROOT . "/admin/tags"; ?>"
                                 class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500 rounded-lg hover:bg-gray-200 group transition-all duration-200"
                                 sidebar-toggle-collapse="">
                                 <div
@@ -101,7 +101,7 @@
                                         </g>
                                     </svg>
                                 </div>
-
+                                <span class="ml-3 text-dark-500 text-sm font-light" sidebar-toggle-item="">Tags</span>
 
                             </a>
                         </li>

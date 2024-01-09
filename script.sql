@@ -41,3 +41,8 @@ ALTER TABLE wikis
 ADD CONSTRAINT fk_category
 FOREIGN KEY (category_id) REFERENCES categories(id)
 ON DELETE CASCADE;
+ALTER TABLE wiki_tag_pivot
+ADD CONSTRAINT fk_wiki_tag_pivot_tag_id
+FOREIGN KEY (tag_id)
+REFERENCES tags(id)
+ON DELETE CASCADE;

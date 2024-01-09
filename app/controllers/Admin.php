@@ -36,9 +36,9 @@ class Admin extends Controller
         return $categoriesNumber;
 
     }
-    public function get_tags($wikiid)
+    public function get_tags()
     {
-        $tags = $this->userModel->fetchTags($wikiid);
+        $tags = $this->userModel->fetchTags();
         return $tags;
     }
     public function get_categories()
@@ -61,6 +61,18 @@ class Admin extends Controller
             $categoryId = $_POST['categoryId'];
             $this->userModel->deleteCategory($categoryId);
             redirect(URLROOT . '/admin/categories');
+
+
+        } else {
+            echo "someting goes wrong";
+        }
+    }
+    public function deleteTag()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tagId'])) {
+            $tagId = $_POST['tagId'];
+            $this->userModel->deleteTag($tagId);
+            redirect(URLROOT . '/admin/tags');
 
 
         } else {
@@ -119,7 +131,6 @@ class Admin extends Controller
         $data = $this->userModel->fetchWikis();
         return $data;
     }
-
     public function wikis()
     {
         $data['wikis'] = $this->get_wikis();
@@ -133,7 +144,12 @@ class Admin extends Controller
         $this->view('admin/categories', $data);
     }
 
-
+    public function tags()
+    {
+        $data['tags'] = $this->get_tags();
+        // var_dump($data);
+        $this->view('admin/tags', $data);
+    }
 
 }
 
