@@ -20,7 +20,7 @@
                 <label class="block text-gray-700 font-bold mb-2" for="username">
                     Username
                 </label>
-                <input required
+                <input
                     class="w-full px-4 py-2 rounded-lg border <?= (!empty($data['username_err']) ? 'border-red-500' : 'border-gray-400') ?>"
                     id="username" name="username" type="text">
                 <?php if (!empty($data['username_err'])): ?>
@@ -35,7 +35,7 @@
                 <label class="block text-gray-700 font-bold mb-2" for="email">
                     Email
                 </label>
-                <input required
+                <input
                     class="w-full px-4 py-2 rounded-lg border <?= (!empty($data['email_err']) ? 'border-red-500' : 'border-gray-400') ?>"
                     id="email" name="email" type="email">
                 <?php if (!empty($data['email_err'])): ?>
@@ -50,7 +50,7 @@
                 <label class="block text-gray-700 font-bold mb-2" for="password">
                     Password
                 </label>
-                <input required
+                <input
                     class="w-full px-4 py-2 rounded-lg border <?= (!empty($data['password_err']) ? 'border-red-500' : 'border-gray-400') ?>"
                     id="password" name="password" type="password">
                 <?php if (!empty($data['password_err'])): ?>

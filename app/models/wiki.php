@@ -14,6 +14,10 @@
     {
         return $this->id;
     }
+    public function setId($id)
+    {
+        $this->title = $id;
+    }
 
     public function getTitle()
     {
@@ -44,7 +48,22 @@
     {
         $this->createdAt = $createdAt;
     }
+    public function getAllWikis($category_id)
+    {
+        $this->db->query('SELECT Wikis.*, Users.name, Categories.title, GROUP_CONCAT(Tags.title) AS tag_names
+    FROM Wikis
+    JOIN Users ON Wikis.author_id = Users.id
+    JOIN Categories ON Wikis.category_id = Categories.id
+    LEFT JOIN tag_wiki_pivot ON Wikis.id = tag_wiki_pivot.wiki_id
+    LEFT JOIN Tags ON tag_wiki_pivot.tag_id = Tags.id
+    WHERE Wikis.is_archived = 0 AND Categories.id = :category_id
+    GROUP BY Wikis.id
+    ORDER BY Wikis.updated_at DESC');
 
+        $this->db->bind(':category_id', $category_id);
+
+        return $this->db->fetchAll();
+    }
 
     public function addWiki($imageWiki, $title, $content, $categoryId)
     {
@@ -112,4 +131,18 @@
         return true;
 
     }
+    public function fetchWiki($id)
+    {
+        $this->db->query("SELECT * FROM wikis WHERE id=:id");
+        $this->db->bind(':id', $id);
+        $this->db->execute();
+        $result = $this->db->fetch(); 
+        if ($result) {
+            $this->setId($result['id']);
+            $this->setTitle($result['title']);
+            $this->setContent($result['content']);
+            $this->setCreatedAt($result['created_at']);
+        }
+    }
+    
 }

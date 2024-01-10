@@ -58,4 +58,17 @@
         }
     }
 
+    public function fetchCategories()
+    {
+        try {
+            $this->db->query("SELECT * FROM categories");
+            $row = $this->db->fetchAll();
+
+            return $row;
+        } catch (Exception $e) {
+
+            error_log("Error fetching users: " . $e->getMessage());
+            return [];
+        }
+    }
 }
