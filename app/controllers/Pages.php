@@ -31,15 +31,31 @@ class Pages extends Controller
 
         $this->view('pages/index', $data);
     }
+    // public function wiki()
+    // {
+    //     if (isset($_POST["submitForm"])) {
+    //         $selectedWikiId = $_POST['selectedWikiId'];
+
+    //         $data['wiki'] = $this->wikiModel->fetchWiki($selectedWikiId);
+    //         $this->view('pages/wiki', $data);
+    //     }
+
+    // }
     public function wiki()
     {
         if (isset($_POST["submitForm"])) {
             $selectedWikiId = $_POST['selectedWikiId'];
+            $this->wikiModel->fetchWiki($selectedWikiId);
 
-            $data['wiki'] = $this->wikiModel->fetchWiki($selectedWikiId);
+            $data['wiki'] = [
+                'id' => $this->wikiModel->getId(),
+                'title' => $this->wikiModel->getTitle(),
+                'content' => $this->wikiModel->getContent(),
+                'created_at' => $this->wikiModel->getCreatedAt(),
+                'TEXT' => $this->wikiModel->getText()
+            ];
             $this->view('pages/wiki', $data);
         }
-
     }
 
 }

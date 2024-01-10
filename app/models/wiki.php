@@ -2,6 +2,7 @@
 {
     private $id;
     private $title;
+    private $text;
     private $content;
     private $createdAt;
 
@@ -18,7 +19,14 @@
     {
         $this->title = $id;
     }
-
+    public function getText()
+    {
+        return $this->text;
+    }
+    public function setText($text)
+    {
+        $this->title = $text;
+    }
     public function getTitle()
     {
         return $this->title;
@@ -136,13 +144,15 @@
         $this->db->query("SELECT * FROM wikis WHERE id=:id");
         $this->db->bind(':id', $id);
         $this->db->execute();
-        $result = $this->db->fetch(); 
+        $result = $this->db->fetch();
         if ($result) {
             $this->setId($result['id']);
             $this->setTitle($result['title']);
             $this->setContent($result['content']);
+            $this->setText($result['TEXT']);
+
             $this->setCreatedAt($result['created_at']);
         }
     }
-    
+
 }

@@ -47,3 +47,4 @@ CREATE TABLE tag_wiki_pivot (
     FOREIGN KEY (wiki_id) REFERENCES wikis(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 INSERT INTO wikis(title,content,author_id,category_id)VALUES("test4","test4 content",1,6)
+ALTER TABLE wikis MODIFY COLUMN TEXT LONGTEXT;
