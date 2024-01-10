@@ -24,30 +24,29 @@
 
         <img src="<?php echo URLROOT . '/images/logo.jpeg'; ?>" alt="" class="h-[90vh] w-full">
     </div>
-    <div class="w-full rounded-lg p-4 mt-16 max-w-sm mx-auto">
-        <h2 class="font-os text-lg font-bold">Categories</h2>
-        <ul class="flex items-start flex-wrap mt-4">
-            <li class="flex flex-1">
+    <div class="w-full rounded-lg p-4 mt-16 max-w-xl mx-auto">
+        <h3 class="font-serif text-3xl mx-auto text-center mb-10">Categories</h3>
+
+        <ul class="flex items-start flex-wrap mt-4 gap-4">
+            <li class="">
                 <a class="p-2 px-3 border-purple-800 mb-4 rounded font-medium hover:bg-transparent hover:border-purple-800 border bg-purple-400/25 dark:bg-purple text-purple-800"
                     href="category/all">
                     all
                 </a>
             </li>
 
-            <?php
-            var_dump($data['categories']);
-            foreach ($data['categories'] as $category)
-            ?>
-            <li class="flex flex-1">
-                <a class="p-2 px-3 border-purple-800 mb-4 rounded font-medium hover:bg-transparent hover:border-purple-800 border bg-purple-400/25 dark:bg-purple text-purple-800"
-                    href="category/react-js">
-                    <?php $category['title'] ?>
-                </a>
-            </li>
-
-
+            <?php foreach ($data['categories'] as $category): ?>
+                <li class="">
+                    <a class="p-2 px-3 border-purple-800 mb-4 rounded font-medium hover:bg-transparent hover:border-purple-800 border bg-purple-400/25 dark:bg-purple text-purple-800"
+                        href="category/<?php echo $category['title']; ?>">
+                        <?php echo $category['title']; ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
         </ul>
+
     </div>
+
 
     <main id="faq" class=" p-5 bg-light-blue -mt-20">
         <div class="flex justify-center items-start my-2">

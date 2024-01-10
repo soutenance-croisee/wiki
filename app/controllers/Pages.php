@@ -12,12 +12,13 @@ class Pages extends Controller
     public function get_categories()
     {
         $categories = $this->userModel->fetchCategories();
+        // var_dump($categories);
         return $categories;
     }
     public function index()
     {
         $data['categories'] = $this->get_categories();
 
-        $this->view('pages/index');
+        $this->view('pages/index', $data);
     }
 }
