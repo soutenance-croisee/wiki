@@ -34,5 +34,10 @@
             echo "someting goes wrong";
         }
     }
+    public function get_categories()
+    {
+        $data = $this->categoryModel->getAllWikis();
+        return $data;
+    }
 
 }

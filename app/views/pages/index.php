@@ -27,25 +27,44 @@
     <div class="w-full rounded-lg p-4 mt-16 max-w-xl mx-auto">
         <h3 class="font-serif text-3xl mx-auto text-center mb-10">Categories</h3>
 
-        <ul class="flex items-start flex-wrap mt-4 gap-4">
-            <li class="">
-                <a class="p-2 px-3 border-purple-800 mb-4 rounded font-medium hover:bg-transparent hover:border-purple-800 border bg-purple-400/25 dark:bg-purple text-purple-800"
-                    href="category/all">
-                    all
-                </a>
-            </li>
+        <form class="space-y-6" method="POST" action="<?= URLROOT ?>/Pages/index">
+            <!-- Hidden input to store the selected category ID -->
+            <input type="hidden" name="selectedCategoryId" id="selectedCategoryId" value="">
 
-            <?php foreach ($data['categories'] as $category): ?>
+            <ul class="flex items-start flex-wrap mt-4 gap-4">
                 <li class="">
                     <a class="p-2 px-3 border-purple-800 mb-4 rounded font-medium hover:bg-transparent hover:border-purple-800 border bg-purple-400/25 dark:bg-purple text-purple-800"
-                        href="category/<?php echo $category['title']; ?>">
-                        <?php echo $category['title']; ?>
+                        href="javascript:;" onclick="selectCategory('all')">
+                        all
                     </a>
                 </li>
-            <?php endforeach; ?>
-        </ul>
+                <?php foreach ($data['categories'] as $category): ?>
+                    <li class="">
+                        <button type="button"
+                            class="p-2 px-3 border-purple-800 mb-4 rounded font-medium hover:bg-transparent hover:border-purple-800 border bg-purple-400/25 dark:bg-purple text-purple-800"
+                            onclick="selectCategory('<?php echo $selectedCategoryId = $category['id']; ?>')">
+                            <?php echo $category['title']; ?>
+                        </button>
+                    <?php endforeach; ?>
+
+                    <?php if ($category['id'] == $selectedCategoryId): ?>
+                        <ul>
+                            <?php foreach ($data['wikis'] as $wiki): ?>
+                                <li>
+                                    <?php echo $wiki['name']; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </li>
+            </ul>
+            <button type="submit" style="display: none;"></button>
+        </form>
+
 
     </div>
+
+
 
 
     <main id="faq" class=" p-5 bg-light-blue -mt-20">
@@ -195,6 +214,11 @@
         </div>
     </main>
     <script>
+        function selectCategory(categoryId) {
+            document.getElementById('selectedCategoryId').value = categoryId;
+            document.forms[0].submit();
+        }
+
         document.addEventListener('alpine:init', () => {
             Alpine.store('accordion', {
                 tab: 0

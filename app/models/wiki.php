@@ -44,20 +44,7 @@
     {
         $this->createdAt = $createdAt;
     }
-    public function getAllWikis()
-    {
-        $this->db->query('SELECT Wikis.*, Users.username, Users.profile_picture, Categories.category_name, GROUP_CONCAT(Tags.tag_name) AS tag_names
-            FROM Wikis
-            JOIN Users ON Wikis.author_id = Users.user_id
-            JOIN Categories ON Wikis.category_id = Categories.category_id
-            LEFT JOIN WikiTags ON Wikis.wiki_id = WikiTags.wiki_id
-            LEFT JOIN Tags ON WikiTags.tag_id = Tags.tag_id
-            WHERE Wikis.archived = 0
-            GROUP BY Wikis.wiki_id
-            ORDER BY Wikis.updated_at DESC;');
 
-        return $this->db->resultSet();
-    }
 
     public function addWiki($imageWiki, $title, $content, $categoryId)
     {
