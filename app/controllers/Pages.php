@@ -33,11 +33,13 @@ class Pages extends Controller
     }
     public function wiki()
     {
-        $id = isset($_POST['selectedWikiId']) ? $_POST['selectedWikiId'] : null;
-        var_dump($_POST);
-        $data['wiki'] = $this->wikiModel->fetchwiki($id);
-        var_dump($data['wiki']);
-        $this->view('pages/wiki', $data);
+        if (isset($_POST["submitForm"])) {
+            $selectedWikiId = $_POST['selectedWikiId'];
+
+            $data['wiki'] = $this->wikiModel->fetchWiki($selectedWikiId);
+            $this->view('pages/wiki', $data);
+        }
 
     }
+
 }
