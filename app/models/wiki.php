@@ -2,7 +2,8 @@
 {
     private $id;
     private $title;
-    private $text;
+    private $body;
+    private $author_id;
     private $content;
     private $createdAt;
 
@@ -17,15 +18,23 @@
     }
     public function setId($id)
     {
-        $this->title = $id;
+        $this->id = $id;
     }
-    public function getText()
+    public function getAuthor_Id()
     {
-        return $this->text;
+        return $this->author_id;
     }
-    public function setText($text)
+    public function setAuthor_Id($author_id)
     {
-        $this->title = $text;
+        $this->author_id = $author_id;
+    }
+    public function getbody()
+    {
+        return $this->body;
+    }
+    public function setbody($body)
+    {
+        $this->body = $body;
     }
     public function getTitle()
     {
@@ -139,18 +148,40 @@
         return true;
 
     }
+    public function fetchTagsByWiki($wikiId)
+    {
+        $this->db->query("SELECT t.* FROM tags t
+                      JOIN tags_wiki_pivot twp ON t.id = twp.tag_id
+                      WHERE twp.wiki_id = :wiki_id");
+        $this->db->bind(':wiki_id', $wikiId);
+
+        $tagsData = $this->db->fetchAll();
+
+        $tags = [];
+
+        foreach ($tagsData as $tagData) {
+            $tag = new Tag();
+            $tag->setId($tagData['id']);
+            $tag->setTitle($tagData['tag_name']);
+            $tags[] = $tag;
+        }
+
+        return $tags;
+    }
+
     public function fetchWiki($id)
     {
-        $this->db->query("SELECT * FROM wikis WHERE id=:id");
+        $this->db->query("SELECT * FROM wikis WHERE id = :id");
         $this->db->bind(':id', $id);
         $this->db->execute();
         $result = $this->db->fetch();
+
         if ($result) {
             $this->setId($result['id']);
             $this->setTitle($result['title']);
             $this->setContent($result['content']);
-            $this->setText($result['TEXT']);
-
+            $this->setbody($result['body']);
+            $this->setAuthor_Id($result['author_id']);
             $this->setCreatedAt($result['created_at']);
         }
     }

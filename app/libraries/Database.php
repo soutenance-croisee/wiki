@@ -96,6 +96,10 @@ class Database
       return null;
     }
   }
+  public function lastInsertId()
+  {
+    return $this->dbh->lastInsertId();
+  }
 }
 
 
