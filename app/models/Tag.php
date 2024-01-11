@@ -45,7 +45,17 @@ class Tag
 
     }
 
+    public function getWikisGroupedByCategory()
+    {
+        $this->db->query('SELECT Categories.title AS category_title, GROUP_CONCAT(Wikis.title) AS wiki_titles
+                          FROM Wikis
+                          JOIN Categories ON Wikis.category_id = Categories.id
+                          WHERE Wikis.is_archived = 0
+                          GROUP BY Categories.id
+                          ORDER BY Categories.id');
 
+        return $this->db->fetchAll();
+    }
     // Add a new tag for a specific wiki
     public function addNewTag($wikiId, $tagName)
     {

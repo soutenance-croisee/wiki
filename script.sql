@@ -48,3 +48,15 @@ CREATE TABLE tag_wiki_pivot (
 );
 INSERT INTO wikis(title,content,author_id,category_id)VALUES("test4","test4 content",1,6)
 ALTER TABLE wikis MODIFY COLUMN TEXT LONGTEXT;
+SELECT Categories.title AS category_title, GROUP_CONCAT(Wikis.title) AS wiki_titles
+                      FROM Wikis
+                      JOIN Categories ON Wikis.category_id = Categories.id
+                      WHERE Wikis.is_archived = 0
+                      GROUP BY Categories.id
+                      ORDER BY Categories.id
+                      SELECT Categories.title AS category_title, GROUP_CONCAT(Wikis.title) AS wiki_titles
+                          FROM Wikis
+                          JOIN Categories ON Wikis.category_id = Categories.id
+                          WHERE Wikis.is_archived = 0
+                          GROUP BY Categories.id
+                          ORDER BY Categories.id

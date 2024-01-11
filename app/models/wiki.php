@@ -135,6 +135,34 @@
 
         // return $tagObjects;
     }
+    public function getMyWikis()
+    {
+        $this->db->query('SELECT Wikis.*, Users.name, Users.email, Categories.title, GROUP_CONCAT(Tags.title) AS tag_names
+            FROM Wikis
+            JOIN Users ON Wikis.author_id = Users.id
+            JOIN Categories ON Wikis.category_id = Categories.id
+            LEFT JOIN tag_wiki_pivot ON Wikis.id = tag_wiki_pivot.wiki_id
+            LEFT JOIN Tags ON tag_wiki_pivot.tag_id = Tags.id
+            WHERE Wikis.is_archived = 0 AND author_id = :user_id
+            GROUP BY Wikis.id
+            ORDER BY Wikis.updated_at DESC
+        ');
+
+        $this->db->bind(':user_id', $_SESSION['user_id']);
+
+        return $this->db->fetchAll();
+    }
+    public function getWikisGroupedByCategory()
+    {
+        $this->db->query('SELECT Categories.title AS category_title, GROUP_CONCAT(Wikis.title) AS wiki_titles
+                          FROM Wikis
+                          JOIN Categories ON Wikis.category_id = Categories.id
+                          WHERE Wikis.is_archived = 0
+                          GROUP BY Categories.id
+                          ORDER BY Categories.id');
+
+        return $this->db->fetchAll();
+    }
     public function deleteWikiTags($wikiId)
     {
         $query = "DELETE FROM wikitags WHERE wiki_id = :wiki_id";
@@ -145,7 +173,7 @@
 
     public function deleteWiki($wikiId)
     {
-        $this->db->query('DELETE FROM Wikis WHERE wiki_id = :wikiId');
+        $this->db->query('DELETE FROM Wikis WHERE id = :wikiId');
         $this->db->bind(':wikiId', $wikiId);
         return $this->db->execute();
     }

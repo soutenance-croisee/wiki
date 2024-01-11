@@ -15,8 +15,8 @@
 
 <body>
     <?php
-    // include(APPROOT . "/views/includes/header.php");
-    
+    include(APPROOT . "/views/includes/header.php");
+
 
     ?>
     <div>

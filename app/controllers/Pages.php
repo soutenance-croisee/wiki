@@ -16,12 +16,6 @@ class Pages extends Controller
 
     }
 
-    // public function get_categories()
-    // {
-    //     $categories = $this->userModel->fetchCategories();
-    //     // var_dump($categories);
-    //     return $categories;
-    // }
 
     public function index()
     {
@@ -71,18 +65,53 @@ class Pages extends Controller
             if (isset($_POST['tags'])) {
                 $tags = explode(',', $_POST['tags']);
                 var_dump($tags);
-                die();
+                // die();
                 foreach ($tags as $tagName) {
-                    // Trim spaces from tag name
                     $tagName = trim($tagName);
-
-                    // Add the tag to the pivot table
                     $this->tagModel->addNewTag($wikiId, $tagName);
                 }
             }
             redirect(URLROOT . '/pages/index');
         }
     }
+
+    // YourController.php
+
+    // YourController.php
+
+    // YourController.php
+
+    public function Mywikis()
+    {
+        $wikis = $this->wikiModel->getMyWikis();
+
+        // Fetch wikis grouped by category
+        $wikisGroupedByCategory = $this->tagModel->getWikisGroupedByCategory();
+        // var_dump($wikisGroupedByCategory);
+        // die();
+
+        $categories = $this->categoryModel->fetchCategories();
+        $wikiTags = [];
+
+        foreach ($wikis as $wiki) {
+            // Fetch tags for each wiki
+            $tags = $this->tagModel->fetchTagsByWiki($wiki['id']);
+
+            $wikiTags[$wiki['id']] = $tags;
+        }
+
+        $data = [
+            'categories' => $categories,
+            'wikisGroupedByCategory' => $wikisGroupedByCategory,
+            'wikiTags' => $wikiTags,
+            'wikis' => $wikis,
+        ];
+
+        $this->view('Pages/MyWikis', $data);
+    }
+
+
+
 
 
     public function wiki()

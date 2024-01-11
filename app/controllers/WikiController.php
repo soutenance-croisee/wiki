@@ -11,9 +11,19 @@ class WikiController extends Controller
     {
         $this->wikiModel = $this->model('Wiki');
         $this->CategoryModel = $this->model('Category');
-        $this->tagModel = $this->model('Tags');
+        $this->tagModel = $this->model('Tag');
     }
+    public function deleteWiki()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['wiki_id'];
 
+            $this->wikiModel->deleteWiki($id);
+            redirect(URLROOT . '/pages/MyWikis');
+
+
+        }
+    }
     public function index()
     {
         $wikis = $this->wikiModel->getAllWikis();
