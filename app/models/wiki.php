@@ -82,13 +82,14 @@
         return $this->db->fetchAll();
     }
 
-    public function addWiki($title, $content, $categoryId, $body)
+    public function addWiki($title, $content, $categoryId, $img, $body)
     {
-        $this->db->query('INSERT INTO Wikis (title, content, category_id, author_id, body) VALUES (:title, :content, :categoryId, :author_id, :body)');
+        $this->db->query('INSERT INTO Wikis (title, content, author_id, category_id, image_wiki, body) VALUES (:title, :content, :author_id, :categoryId, :img, :body)');
         $this->db->bind(':title', $title);
         $this->db->bind(':content', $content);
+        $this->db->bind(':author_id', $_SESSION['user_id']);
         $this->db->bind(':categoryId', $categoryId);
-        $this->db->bind(':author_id', $_SESSION['user_id']);  // Corrected variable name
+        $this->db->bind(':img', $img);
         $this->db->bind(':body', $body);
 
         $this->db->execute();

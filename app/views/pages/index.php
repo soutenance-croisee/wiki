@@ -66,7 +66,7 @@
                                                 class="flex flex-col hover:border-purple-600 hover:ring-purple-600 hover:shadow-lg transition duration-300 ease-in-out">
                                                 <a rel="noopener noreferrer" href="#">
                                                     <img alt="" class=" object-cover w-full h-52 bg-gray-500"
-                                                        src="<?php echo URLROOT . '/images/w1.jpeg'; ?>">
+                                                        src="<?php echo URLROOT . '/public/' . $wiki['image_wiki']; ?>">
                                                 </a>
                                                 <div class="flex flex-col flex-1 p-6">
                                                     <a rel="noopener noreferrer" href="#"

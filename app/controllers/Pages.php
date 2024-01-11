@@ -45,14 +45,29 @@ class Pages extends Controller
     public function addingWiki()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            var_dump($_POST);
-            // die();
+            $imageWiki = URLROOT . '/images/w1.jpeg';
+
+
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $targetDirectory = "upload/";
+                $targetPath = $targetDirectory . basename($_FILES['image']['name']);
+
+                if (!file_exists($targetDirectory)) {
+                    mkdir($targetDirectory, 0755, true);
+                }
+
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+                    $imageWiki = "upload/" . $_FILES['image']['name'];
+                } else {
+                    $_SESSION['message'] = ['type' => 'error', 'text' => 'Sorry, there was a problem uploading the image.'];
+                }
+            }
             $title = $_POST['title'];
             $content = $_POST['content'];
             $categoryId = $_POST['category'];
             $body = $_POST['body'];
-
-            $this->wikiModel->addWiki($title, $content, $categoryId, $body);
+            // $img = $_POST['image'];
+            $this->wikiModel->addWiki($title, $content, $categoryId, $imageWiki, $body);
             redirect(URLROOT . '/pages/index');
         }
     }
