@@ -67,7 +67,19 @@ class Pages extends Controller
             $categoryId = $_POST['category'];
             $body = $_POST['body'];
             // $img = $_POST['image'];
-            $this->wikiModel->addWiki($title, $content, $categoryId, $imageWiki, $body);
+            $wikiId = $this->wikiModel->addWiki($title, $content, $categoryId, $imageWiki, $body);
+            if (isset($_POST['tags'])) {
+                $tags = explode(',', $_POST['tags']);
+                var_dump($tags);
+                die();
+                foreach ($tags as $tagName) {
+                    // Trim spaces from tag name
+                    $tagName = trim($tagName);
+
+                    // Add the tag to the pivot table
+                    $this->tagModel->addNewTag($wikiId, $tagName);
+                }
+            }
             redirect(URLROOT . '/pages/index');
         }
     }

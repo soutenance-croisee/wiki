@@ -42,44 +42,27 @@ class Tag
 
         $tags = $this->db->fetchAll();
         return $tags;
-        // var_dump($tagsData);
 
-        // $data = [];
-
-        // foreach ($tagsData as $tagData) {
-        //     $tag = new Tag();
-        //     $tag->setId($tagData['id']);
-        //     $tag->setTitle($tagData['title']);
-        //     $data[] = $tag;
-        // }
-
-        // return $data;
     }
 
 
     // Add a new tag for a specific wiki
     public function addNewTag($wikiId, $tagName)
     {
-        // Check if the tag already exists
-        $this->db->query("SELECT * FROM tags WHERE title= :tag_name");
+        // Insert the tag
+        $this->db->query('INSERT INTO tags (title) VALUES (:tag_name)');
         $this->db->bind(':tag_name', $tagName);
-        $tag = $this->db->fetch();
+        $this->db->execute();
 
-        // If the tag doesn't exist, add it
-        if (!$tag) {
-            $this->db->query('INSERT INTO tags (title) VALUES (:tag_name)');
-            $this->db->bind(':tag_name', $tagName);
-            $this->db->execute();
-            $this->setId($this->db->lastInsertId());
-        } else {
-            $this->setId($tag['id']);
-        }
+        // Get the last inserted tag ID
+        $tagId = $this->db->lastInsertId();
 
         // Add the tag to the pivot table
-        $this->db->query('INSERT INTO tags_wiki_pivot ( tag_id,wiki_id) VALUES ( :tag_id,:wiki_id)');
+        $this->db->query('INSERT INTO tag_wiki_pivot (tag_id, wiki_id) VALUES (:tag_id, :wiki_id)');
         $this->db->bind(':wiki_id', $wikiId);
-        $this->db->bind(':tag_id', $this->getId());
+        $this->db->bind(':tag_id', $tagId);
 
         return $this->db->execute();
     }
+
 }
