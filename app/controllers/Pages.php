@@ -4,7 +4,7 @@ class Pages extends Controller
     private $userModel;
     private $categoryModel;
     private $wikiModel;
-    // private $tagModel;
+    private $tagModel;
 
     public function __construct()
     {
@@ -12,7 +12,7 @@ class Pages extends Controller
 
         $this->userModel = $this->model('User');
         $this->categoryModel = $this->model('Category');
-        // $this->tagModel = $this->model('tags');
+        $this->tagModel = $this->model('Tag');
 
     }
 
@@ -33,28 +33,33 @@ class Pages extends Controller
 
         $this->view('pages/index', $data);
     }
-    // public function wiki()
-    // {
-    //     if (isset($_POST["submitForm"])) {
-    //         $selectedWikiId = $_POST['selectedWikiId'];
+    public function addWiki()
+    {
+        if ($_SESSION['METHOD_REQUEST'] == 'POST') {
+            var_dump($_POST);
+            $title = $_POST['title'];
+            $content = $_POST['content'];
+            $categoryId = $_POST['category'];
+            $body = $_POST['body'];
 
-    //         $data['wiki'] = $this->wikiModel->fetchWiki($selectedWikiId);
-    //         $this->view('pages/wiki', $data);
-    //     }
+            $this->wikiModel->addWiki($title, $content, $categoryId, $body);
+            redirect(URLROOT . '/pages/index');
+        }
+    }
 
-    // }
     public function wiki()
     {
         if (isset($_POST["submitForm"])) {
             $selectedWikiId = $_POST['selectedWikiId'];
 
-            var_dump($selectedWikiId);
+            // var_dump($selectedWikiId);
             // Fetch the wiki
             $this->wikiModel->fetchWiki($selectedWikiId);
 
             // Fetch tags associated with the wiki
-            // $tags = $this->tagModel->getTagsByWiki($selectedWikiId);
+            $data['tags'] = $this->wikiModel->fetchTagsByWiki($selectedWikiId);
 
+            // var_dump($data['tags']);
             // Prepare data
             $data['wiki'] = [
                 'id' => $this->wikiModel->getId(),

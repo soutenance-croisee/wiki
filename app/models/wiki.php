@@ -82,18 +82,20 @@
         return $this->db->fetchAll();
     }
 
-    public function addWiki($imageWiki, $title, $content, $categoryId)
+    public function addWiki($title, $content, $categoryId, $body)
     {
-        $this->db->query('INSERT INTO Wikis (image_wiki, title, content, category_id, author_id) VALUES (:image, :title, :content, :categoryId, :author_id)');
-        $this->db->bind(':image', $imageWiki);
+        $this->db->query('INSERT INTO Wikis (title, content, category_id, author_id, body) VALUES (:title, :content, :categoryId, :author_id, :body)');
         $this->db->bind(':title', $title);
         $this->db->bind(':content', $content);
         $this->db->bind(':categoryId', $categoryId);
-        $this->db->bind(':author_id', $_SESSION['user_id']);
+        $this->db->bind(':author_id', $_SESSION['user_id']);  // Corrected variable name
+        $this->db->bind(':body', $body);
+
         $this->db->execute();
 
         return $this->db->lastInsertId();
     }
+
 
     public function addWikiTags($wikiId, $tagId)
     {
@@ -109,6 +111,28 @@
 
             return false;
         }
+    }
+    public function fetchTagsByWiki($wikiId)
+    {
+        $this->db->query("SELECT t.* FROM tags t
+        JOIN tag_wiki_pivot twp ON t.id = twp.tag_id
+        WHERE twp.wiki_id = :wiki_id");
+        $this->db->bind(':wiki_id', $wikiId);
+
+        $tagsData = $this->db->fetchAll();
+        // var_dump($tagsData)
+        ;
+        return $tagsData;
+        // $tagObjects = [];
+
+        // foreach ($tagsData as $tagData) {
+        //     $tag = new Tag();
+        //     $tag->setId($tagData['id']);
+        //     $tag->setTitle($tagData['title']);
+        //     $tagObjects[] = $tag;
+        // }
+
+        // return $tagObjects;
     }
     public function deleteWikiTags($wikiId)
     {
@@ -148,26 +172,7 @@
         return true;
 
     }
-    public function fetchTagsByWiki($wikiId)
-    {
-        $this->db->query("SELECT t.* FROM tags t
-                      JOIN tags_wiki_pivot twp ON t.id = twp.tag_id
-                      WHERE twp.wiki_id = :wiki_id");
-        $this->db->bind(':wiki_id', $wikiId);
 
-        $tagsData = $this->db->fetchAll();
-
-        $tags = [];
-
-        foreach ($tagsData as $tagData) {
-            $tag = new Tag();
-            $tag->setId($tagData['id']);
-            $tag->setTitle($tagData['tag_name']);
-            $tags[] = $tag;
-        }
-
-        return $tags;
-    }
 
     public function fetchWiki($id)
     {

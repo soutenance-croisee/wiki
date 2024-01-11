@@ -16,8 +16,8 @@
 
 <body>
     <?php
-    include(APPROOT . "/views/includes/header.php");
-
+    // include(APPROOT . "/views/includes/header.php");
+    
 
     ?>
     <div>
@@ -34,57 +34,133 @@
 
                 <?php foreach ($data['categories'] as $category): ?>
 
-                    <li class="">
-                        <button type="button"
-                            class="p-2 px-3 border-purple-800 mb-4 rounded font-medium hover:bg-transparent hover:border-purple-800 border bg-purple-400/25 dark:bg-purple text-purple-800"
-                            onclick="selectCategory('<?php echo $selectedCategoryId = $category['id']; ?>')">
-                            <?php echo $category['title']; ?>
-                        </button>
+                <li class="">
+                    <button type="button"
+                        class="p-2 px-3 border-purple-800 mb-4 rounded font-medium hover:bg-transparent hover:border-purple-800 border bg-purple-400/25 dark:bg-purple text-purple-800"
+                        onclick="selectCategory('<?php echo $selectedCategoryId = $category['id']; ?>')">
+                        <?php echo $category['title']; ?>
+                    </button>
                     <?php endforeach; ?>
 
-                    <?php if ($category['id'] == $selectedCategoryId): ?>
-                        <section class="py-6 sm:py-12  text-gray-800 w-full max-w-7xl">
-                            <div class="container p-6 mx-auto space-y-8">
-
-                                <div class="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
-                                    <?php foreach ($data['wikis'] as $wiki):
-                                        ?>
-                                        <form class="space-y-6" method="POST" action="<?= URLROOT ?>/Pages/wiki" id="wikiForm">
-
-                                            <input type="hidden" name="selectedWikiId" id="selectedWikiId"
-                                                value="<?= $wiki["id"] ?>">
-                                            <button name="submitForm"
-                                                class="flex flex-col hover:border-purple-600 hover:ring-purple-600 hover:shadow-lg transition duration-300 ease-in-out">
-                                                <a rel="noopener noreferrer" href="#">
-                                                    <img alt="" class=" object-cover w-full h-52 bg-gray-500"
-                                                        src="<?php echo URLROOT . '/images/w1.jpeg'; ?>">
-                                                </a>
-                                                <div class="flex flex-col flex-1 p-6">
-                                                    <a rel="noopener noreferrer" href="#"
-                                                        aria-label="<?php echo $wiki['title']; ?>"></a>
-                                                    <a rel="noopener noreferrer" href="#"
-                                                        class="text-xs tracking-uppercase hover:underline text-violet-600">
-                                                        <?php echo $wiki['name']; ?>
-                                                    </a>
-                                                    <h3 class="flex-1 py-2 text-lg font-semibold leading-tight">
-                                                        <?php echo $wiki['content']; ?>
-                                                    </h3>
-                                                    <div
-                                                        class="flex flex-wrap justify-between pt-3 space-x-2 text-xs text-gray-600">
-                                                        <span>
-                                                            <?php echo date('F j, Y', strtotime($wiki['created_at'])); ?>
-                                                        </span>
-                                                        <span>
-                                                            <?php echo ($wiki['name']); ?>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </button>
-                                        </form>
-                                    <?php endforeach; ?>
+                    <button type="button" data-modal-toggle="user-modal" onclick="openModal('modelConfirm')"
+                        class="p-2 px-6 border-green-700 mb-4 rounded-xl font-medium hover:bg-transparent hover:border-green-800 border bg-green-200 dark:bg-purple text-black">
+                        Add Wiki
+                    </button>
+                    <form class="space-y-6" method="POST" action="<?= URLROOT ?>/Pages/addWiki">
+                        <div id="modelConfirm"
+                            class="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center md:inset-0 h-modal sm:h-full flex"
+                            aria-modal="true" role="dialog">
+                            <div class="relative px-4 w-full max-w-2xl h-full md:h-auto">
+                                <div class="relative bg-white rounded-2xl shadow-lg">
+                                    <div class="flex justify-between items-start p-5 rounded-t border-b">
+                                        <h3 class="text-xl font-semibold">Add Wiki</h3>
+                                        <button type="button" onclick="closeModal('modelConfirm')"
+                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-2xl text-sm p-1.5 ml-auto inline-flex items-center"
+                                            data-modal-toggle="add-user-modal">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="p-6 space-y-6">
+                                        <div class="grid grid-cols-6 gap-6">
+                                            <div class="col-span-6 sm:col-span-3">
+                                                <label for="title"
+                                                    class="block mb-2 text-sm font-medium text-gray-900">Title</label>
+                                                <input type="text" name="title" id="title"
+                                                    class="shadow-lg-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5"
+                                                    placeholder="Bonnie" required="">
+                                            </div>
+                                            <div class="col-span-6 sm:col-span-3">
+                                                <label for="category"
+                                                    class="block mb-2 text-sm font-medium text-gray-900">Category</label>
+                                                <select name="category" id="category"
+                                                    class="shadow-lg-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5"
+                                                    required="">
+                                                    <?php foreach ($data['categories'] as $category): ?>
+                                                    <option value="<?= $category['id'] ?>">
+                                                        <?= $category['title'] ?>
+                                                    </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-span-6">
+                                                <label for="content"
+                                                    class="block mb-2 text-sm font-medium text-gray-900">Content</label>
+                                                <textarea name="content" id="content" rows="4"
+                                                    class="shadow-lg-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5"
+                                                    placeholder="Enter wiki content" required=""></textarea>
+                                            </div>
+                                            <div class="col-span-6">
+                                                <label for="body"
+                                                    class="block mb-2 text-sm font-medium text-gray-900">Body</label>
+                                                <textarea name="body" id="body" rows="4"
+                                                    class="shadow-lg-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-2 focus:ring-fuchsia-50 focus:border-fuchsia-300 block w-full p-2.5"
+                                                    placeholder="Enter wiki body" required=""></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="items-center p-6 rounded-b border-t border-gray-200">
+                                        <button
+                                            class="text-white rounded-lg bg-gradient-to-br from-pink-500 to-voilet-500 shadow-md shadow-gray-300 hover:scale-[1.02] transition-transform text-sm px-5 py-2.5 text-center"
+                                            type="submit">Save all</button>
+                                    </div>
                                 </div>
                             </div>
-                        </section>
+                        </div>
+                    </form>
+
+
+
+
+
+
+                    <?php if ($category['id'] == $selectedCategoryId): ?>
+                    <section class="py-6 sm:py-12  text-gray-800 w-full max-w-7xl">
+                        <div class="container p-6 mx-auto space-y-8">
+
+                            <div class="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
+                                <?php foreach ($data['wikis'] as $wiki):
+                                        ?>
+                                <form class="space-y-6" method="POST" action="<?= URLROOT ?>/Pages/wiki" id="wikiForm">
+
+                                    <input type="hidden" name="selectedWikiId" id="selectedWikiId"
+                                        value="<?= $wiki["id"] ?>">
+                                    <button name="submitForm"
+                                        class="flex flex-col hover:border-purple-600 hover:ring-purple-600 hover:shadow-lg transition duration-300 ease-in-out">
+                                        <a rel="noopener noreferrer" href="#">
+                                            <img alt="" class=" object-cover w-full h-52 bg-gray-500"
+                                                src="<?php echo URLROOT . '/images/w1.jpeg'; ?>">
+                                        </a>
+                                        <div class="flex flex-col flex-1 p-6">
+                                            <a rel="noopener noreferrer" href="#"
+                                                aria-label="<?php echo $wiki['title']; ?>"></a>
+                                            <a rel="noopener noreferrer" href="#"
+                                                class="text-xs tracking-uppercase hover:underline text-violet-600">
+                                                <?php echo $wiki['name']; ?>
+                                            </a>
+                                            <h3 class="flex-1 py-2 text-lg font-semibold leading-tight">
+                                                <?php echo $wiki['content']; ?>
+                                            </h3>
+                                            <div
+                                                class="flex flex-wrap justify-between pt-3 space-x-2 text-xs text-gray-600">
+                                                <span>
+                                                    <?php echo date('F j, Y', strtotime($wiki['created_at'])); ?>
+                                                </span>
+                                                <span>
+                                                    <?php echo ($wiki['name']); ?>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </form>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </section>
 
                     <?php endif; ?>
                 </li>
@@ -98,189 +174,55 @@
 
 
 
-    <main id="faq" class=" p-5 bg-light-blue -mt-20">
-        <div class="flex justify-center items-start my-2">
-            <div class="w-full sm:w-10/12 md:w-1/2 my-1">
-                <div class="flex flex-col items-center  mt-24">
 
-                    <h3 class="font-serif text-3xl mx-auto text-center mb-10">FAQ</h3>
-                </div>
-                <ul class="flex flex-col items-center justify-center">
-                    <li class="bg-white my-2 shadow-lg w-[80vw] " x-data="accordion(1)">
-                        <h2 @click="handleClick()"
-                            class="flex flex-row justify-between items-center font-semibold p-3 cursor-pointer">
-                            <span>When will my order arrive?</span>
-                            <svg :class="handleRotate()"
-                                class="fill-current text-purple-600 h-6 w-6 transform transition-transform duration-500"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10">
-                                </path>
-                            </svg>
-
-                        </h2>
-                        <div x-ref="tab" :style="handleToggle()"
-                            class="border-l-2 border-purple-600 overflow-hidden max-h-0 duration-500 transition-all">
-                            <p class="p-3 text-gray-900">
-                                Shipping time is set by our delivery partners, according to the
-                                delivery method
-                                chosen by you. Additional details can be found in the order
-                                confirmation
-                            </p>
-                        </div>
-                    </li>
-                    <li class="bg-white my-2 shadow-lg  w-[80vw]" x-data="accordion(2)">
-                        <h2 @click="handleClick()"
-                            class="flex flex-row justify-between items-center font-semibold p-3 cursor-pointer">
-                            <span>How do I track my order?</span>
-                            <svg :class="handleRotate()"
-                                class="fill-current text-purple-600 h-6 w-6 transform transition-transform duration-500"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10">
-                                </path>
-                            </svg>
-                        </h2>
-                        <div class="border-l-2 border-purple-600 overflow-hidden max-h-0 duration-500 transition-all"
-                            x-ref="tab" :style="handleToggle()">
-                            <p class="p-3 text-gray-900">
-                                Once shipped, you’ll get a confirmation email that includes a
-                                tracking number
-                                and additional information regarding tracking your order.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="bg-white my-2 shadow-lg  w-[80vw]" x-data="accordion(3)">
-                        <h2 @click="handleClick()"
-                            class="flex flex-row justify-between items-center font-semibold p-3 cursor-pointer">
-                            <span>What’s your return policy?</span>
-                            <svg :class="handleRotate()"
-                                class="fill-current text-purple-600 h-6 w-6 transform transition-transform duration-500"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10">
-                                </path>
-                            </svg>
-                        </h2>
-                        <div class="border-l-2 border-purple-600 overflow-hidden max-h-0 duration-500 transition-all"
-                            x-ref="tab" :style="handleToggle()">
-                            <p class="p-3 text-gray-900">
-                                We allow the return of all items within 30 days of your original
-                                order’s date.
-                                If you’re interested in returning your items, send us an email
-                                with your order
-                                number and we’ll ship a return label.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="bg-white my-2 shadow-lg  w-[80vw]" x-data="accordion(4)">
-                        <h2 @click="handleClick()"
-                            class="flex flex-row justify-between items-center font-semibold p-3 cursor-pointer">
-                            <span>How do I make changes to an existing order?</span>
-                            <svg :class="handleRotate()"
-                                class="fill-current text-purple-600 h-6 w-6 transform transition-transform duration-500"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10">
-                                </path>
-                            </svg>
-                        </h2>
-                        <div class="border-l-2 border-purple-600 overflow-hidden max-h-0 duration-500 transition-all"
-                            x-ref="tab" :style="handleToggle()">
-                            <p class="p-3 text-gray-900">
-                                Changes to an existing order can be made as long as the order is
-                                still in
-                                “processing” status. Please contact our team via email and we’ll
-                                make sure to
-                                apply the needed changes. If your order has already been
-                                shipped, we cannot
-                                apply any changes to it. If you are unhappy with your order when
-                                it arrives,
-                                please contact us for any changes you may require.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="bg-white my-2 shadow-lg  w-[80vw]" x-data="accordion(5)">
-                        <h2 @click="handleClick()"
-                            class="flex flex-row justify-between items-center font-semibold p-3 cursor-pointer">
-                            <span>What shipping options do you have?</span>
-                            <svg :class="handleRotate()"
-                                class="fill-current text-purple-600 h-6 w-6 transform transition-transform duration-500"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10">
-                                </path>
-                            </svg>
-                        </h2>
-                        <div class="border-l-2 border-purple-600 overflow-hidden max-h-0 duration-500 transition-all"
-                            x-ref="tab" :style="handleToggle()">
-                            <p class="p-3 text-gray-900">
-                                For USA domestic orders we offer FedEx and USPS shipping.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="bg-white my-2 shadow-lg  w-[80vw]" x-data="accordion(6)">
-                        <h2 @click="handleClick()"
-                            class="flex flex-row justify-between items-center font-semibold p-3 cursor-pointer">
-                            <span>What payment methods do you accept?</span>
-                            <svg :class="handleRotate()"
-                                class="fill-current text-purple-600 h-6 w-6 transform transition-transform duration-500"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10">
-                                </path>
-                            </svg>
-                        </h2>
-                        <div class="border-l-2 border-purple-600 overflow-hidden max-h-0 duration-500 transition-all"
-                            x-ref="tab" :style="handleToggle()">
-                            <p class="p-3 text-gray-900">
-                                Any method of payments acceptable by you. For example: We accept
-                                MasterCard,
-                                Visa, American Express, PayPal, JCB Discover, Gift Cards, etc.
-                            </p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </main>
     <script>
-        function submitForm(selectedWikiId) {
-            // Set the selectedWikiId input field value
-            document.getElementById('selectedWikiId').value = selectedWikiId;
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
+        document.getElementsByTagName("body")[0].classList.add("overflow-y-hidden");
+    }
 
-            // Submit the form
-            document.getElementById('wikiForm').submit();
-        }
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+        document.getElementsByTagName("body")[0].classList.remove("overflow-y-hidden");
+    }
 
-        function selectCategory(categoryId) {
-            document.getElementById('selectedCategoryId').value = categoryId;
-            document.forms[0].submit();
-        }
+    function submitForm(selectedWikiId) {
+        // Set the selectedWikiId input field value
+        document.getElementById('selectedWikiId').value = selectedWikiId;
 
-        document.addEventListener('alpine:init', () => {
-            Alpine.store('accordion', {
-                tab: 0
-            });
+        // Submit the form
+        document.getElementById('wikiForm').submit();
+    }
 
-            Alpine.data('accordion', (idx) => ({
-                init() {
-                    this.idx = idx;
-                },
-                idx: -1,
-                handleClick() {
-                    this.$store.accordion.tab = this.$store.accordion.tab === this.idx ? 0 : this
-                        .idx;
-                },
-                handleRotate() {
-                    return this.$store.accordion.tab === this.idx ? 'rotate-180' : '';
-                },
-                handleToggle() {
-                    return this.$store.accordion.tab === this.idx ?
-                        `max-height: ${this.$refs.tab.scrollHeight}px` : '';
-                }
-            }));
-        })
+    function selectCategory(categoryId) {
+        document.getElementById('selectedCategoryId').value = categoryId;
+        document.forms[0].submit();
+    }
+
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('accordion', {
+            tab: 0
+        });
+
+        Alpine.data('accordion', (idx) => ({
+            init() {
+                this.idx = idx;
+            },
+            idx: -1,
+            handleClick() {
+                this.$store.accordion.tab = this.$store.accordion.tab === this.idx ? 0 : this
+                    .idx;
+            },
+            handleRotate() {
+                return this.$store.accordion.tab === this.idx ? 'rotate-180' : '';
+            },
+            handleToggle() {
+                return this.$store.accordion.tab === this.idx ?
+                    `max-height: ${this.$refs.tab.scrollHeight}px` : '';
+            }
+        }));
+    })
+    // Add this line to hide the modal by default
     </script>
 
 </body>
