@@ -33,10 +33,20 @@ class Pages extends Controller
 
         $this->view('pages/index', $data);
     }
+
+
     public function addWiki()
     {
-        if ($_SESSION['METHOD_REQUEST'] == 'POST') {
+        $data['categories'] = $this->categoryModel->fetchCategories();
+
+        $this->view('pages/addWiki', $data);
+
+    }
+    public function addingWiki()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             var_dump($_POST);
+            // die();
             $title = $_POST['title'];
             $content = $_POST['content'];
             $categoryId = $_POST['category'];
@@ -46,6 +56,7 @@ class Pages extends Controller
             redirect(URLROOT . '/pages/index');
         }
     }
+
 
     public function wiki()
     {

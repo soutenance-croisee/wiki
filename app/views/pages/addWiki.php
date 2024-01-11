@@ -1,4 +1,20 @@
-<form id="addwikiForm" class="space-y-6" method="POST" action="<?= URLROOT ?>/Pages/addWiki">
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- component -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="./assets/styles/styles.css" /> -->
+    <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
+</head>
+
+
+<form id="addwikiForm" class="space-y-6" method="POST" action="<?= URLROOT ?>/Pages/addingWiki">
     <div class=" overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center md:inset-0 h-modal sm:h-full flex"
         aria-modal="true" role="dialog">
         <div class="relative px-4 w-full max-w-2xl h-full md:h-auto">
@@ -58,3 +74,5 @@
         </div>
     </div>
 </form>
+
+<body>
