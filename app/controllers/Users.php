@@ -18,5 +18,8 @@ class Users extends Controller
 
         $this->view('users/register');
     }
-
+    public function index()
+    {
+        $this->view('pages/index');
+    }
 }

@@ -219,5 +219,36 @@
             $this->setCreatedAt($result['created_at']);
         }
     }
+    public function searchWiki($searchTerm)
+    {
+        $this->db->query('
+            SELECT * FROM Wikis
+            WHERE title LIKE :searchTerm
+        ');
+        $this->db->bind(':searchTerm', "%$searchTerm%");
 
+        return $this->db->FetchAll();
+    }
+
+    public function searchTag($searchTerm)
+    {
+        $this->db->query('
+            SELECT * FROM Tags
+            WHERE title LIKE :searchTerm
+        ');
+        $this->db->bind(':searchTerm', "%$searchTerm%");
+
+        return $this->db->fetchAll();
+    }
+
+    public function searchCategory($searchTerm)
+    {
+        $this->db->query('
+            SELECT * FROM Categories
+            WHERE title LIKE :searchTerm
+        ');
+        $this->db->bind(':searchTerm', "%$searchTerm%");
+
+        return $this->db->fetchAll();
+    }
 }

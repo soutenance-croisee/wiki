@@ -200,20 +200,5 @@ class User
         $this->db->execute();
 
     }
-    public function getAllWikis($category_id)
-    {
-        $this->db->query('SELECT Wikis.*, Users.name, Categories.title, GROUP_CONCAT(Tags.title) AS tag_names
-    FROM Wikis
-    JOIN Users ON Wikis.author_id = Users.id
-    JOIN Categories ON Wikis.category_id = Categories.id
-    LEFT JOIN tag_wiki_pivot ON Wikis.id = tag_wiki_pivot.wiki_id
-    LEFT JOIN Tags ON tag_wiki_pivot.tag_id = Tags.id
-    WHERE Wikis.is_archived = 0 AND Categories.id = :category_id
-    GROUP BY Wikis.id
-    ORDER BY Wikis.updated_at DESC');
 
-        $this->db->bind(':category_id', $category_id);
-
-        return $this->db->fetchAll();
-    }
 }
